@@ -24,12 +24,10 @@ namespace CobotIoTCommandFunctionApp.Model
         {
             string jsonString = cloudToDeviceMethodResult.GetPayloadAsJson().Trim('"').Replace("\\\"", "\"");
             JObject jsonObject = JObject.Parse(jsonString);
-            double startPerfCounter = (double) jsonObject["_start_perf_counter"];
-            double endPerfCounter = (double) jsonObject["_end_perf_counter"];
             PayloadModel payloadModel = new PayloadModel();
             payloadModel.Status = (string) jsonObject["_status"];
             payloadModel.Message = (string) jsonObject["_message"];
-            payloadModel.Duration = Math.Round(endPerfCounter - startPerfCounter, 4);
+            payloadModel.Duration = (double) jsonObject["_duration"];
             ReportPayloadModel reportPayloadModel = new ReportPayloadModel();
             reportPayloadModel.Result = cloudToDeviceMethodResult.Status;
             reportPayloadModel.Payload = payloadModel;
