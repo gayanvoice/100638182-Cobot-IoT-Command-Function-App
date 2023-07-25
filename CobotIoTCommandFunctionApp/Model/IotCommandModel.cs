@@ -1,14 +1,9 @@
-﻿using Newtonsoft.Json;
-
-namespace CobotIoTCommandFunctionApp.Model
+﻿namespace CobotIoTCommandFunctionApp.Model
 {
-    public class IoTCommandModel
+    public class IotCommandModel
     {
-        [JsonProperty("iot_device_id")]
-        public string IoTDeviceId { get; set; }
-        [JsonProperty("iot_command")]
-        public string IoTCommand { get; set; }
-        [JsonProperty("iot_payload")]
-        public string IoTPayload { get; set; } = "iot_payload";
+        public string DeviceId { get; set; }
+        public string Command { get; set; }
+        public double ResponseTimeout { get; set; } = 20.0;
     }
 }
