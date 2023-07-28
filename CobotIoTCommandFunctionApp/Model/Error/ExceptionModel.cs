@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 
-namespace CobotIoTCommandFunctionApp.Model
+namespace CobotIotCommandFunctionApp.Model.Error
 {
     public class ExceptionModel
     {
@@ -10,11 +10,11 @@ namespace CobotIoTCommandFunctionApp.Model
         public static ExceptionModel GetFromException(Exception exception)
         {
             JObject exceptionObject = JObject.Parse(exception.Message);
-            JObject messageObject = JObject.Parse((string) exceptionObject["Message"]);
+            JObject messageObject = JObject.Parse((string)exceptionObject["Message"]);
 
             ExceptionModel exceptionModel = new ExceptionModel();
-            exceptionModel.ErrorCode = (int) messageObject["errorCode"];
-            exceptionModel.Message = (string) messageObject["message"];
+            exceptionModel.ErrorCode = (int)messageObject["errorCode"];
+            exceptionModel.Message = (string)messageObject["message"];
             return exceptionModel;
         }
     }
