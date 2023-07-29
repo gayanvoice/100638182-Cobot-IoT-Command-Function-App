@@ -6,19 +6,19 @@ using Newtonsoft.Json.Linq;
 
 namespace CobotIotCommandFunctionApp.Model.Response
 {
-    public class OpenPopupControlCommandResponseModel
+    public class MoveJControlCommandResponseModel
     {
         private Stopwatch stopwatch;
         public string Message { get; set; }
         public double Duration { get; set; }
         public CommandResponseModel CommandResponse { get; set; }
         public CommandRequestModel CommandRequest { get; set; }
-        public OpenPopupControlCommandResponseModel()
+        public MoveJControlCommandResponseModel()
         {
             stopwatch = new Stopwatch();
             stopwatch.Start();
         }
-        public OpenPopupControlCommandResponseModel GetOkRequestRespondModel(string text)
+        public MoveJControlCommandResponseModel GetOkRequestRespondModel(string text)
         {
             stopwatch.Stop();
             Message = text;
@@ -49,12 +49,27 @@ namespace CobotIotCommandFunctionApp.Model.Response
             public double ResponseTimeout { get; set; } = 20.0;
             public class PayloadModel
             {
-                public string PopupText { get; set; }
+                public double Acceleration { get; set; }
+                public double Velocity { get; set; }
+                public double TimeS { get; set; }
+                public double BlendRadius { get; set; }
+                public List<JointPositionModelArrayItem> JointPositionModelArray { get; set; }
+                public class JointPositionModelArrayItem
+                {
+                    public JointPositionModel JointPositionModel { get; set; }
+                }
+                public class JointPositionModel
+                {
+                    public double Base { get; set; }
+                    public double Shoulder { get; set; }
+                    public double Elbow { get; set; }
+                    public double Wrist1 { get; set; }
+                    public double Wrist2 { get; set; }
+                    public double Wrist3 { get; set; }
+                }
             }
         }
         public class CommandResponseModel
-
-
         {
             public double Result { get; set; }
             public PayloadModel Payload { get; set; }

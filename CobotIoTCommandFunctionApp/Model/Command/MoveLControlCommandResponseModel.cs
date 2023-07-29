@@ -6,19 +6,19 @@ using Newtonsoft.Json.Linq;
 
 namespace CobotIotCommandFunctionApp.Model.Response
 {
-    public class OpenPopupControlCommandResponseModel
+    public class MoveLControlCommandResponseModel
     {
         private Stopwatch stopwatch;
         public string Message { get; set; }
         public double Duration { get; set; }
         public CommandResponseModel CommandResponse { get; set; }
         public CommandRequestModel CommandRequest { get; set; }
-        public OpenPopupControlCommandResponseModel()
+        public MoveLControlCommandResponseModel()
         {
             stopwatch = new Stopwatch();
             stopwatch.Start();
         }
-        public OpenPopupControlCommandResponseModel GetOkRequestRespondModel(string text)
+        public MoveLControlCommandResponseModel GetOkRequestRespondModel(string text)
         {
             stopwatch.Stop();
             Message = text;
@@ -49,12 +49,27 @@ namespace CobotIotCommandFunctionApp.Model.Response
             public double ResponseTimeout { get; set; } = 20.0;
             public class PayloadModel
             {
-                public string PopupText { get; set; }
+                public double Acceleration { get; set; }
+                public double Velocity { get; set; }
+                public double TimeS { get; set; }
+                public double BlendRadius { get; set; }
+                public List<TcpPositionModelArrayItem> TcpPositionModelArray { get; set; }
+                public class TcpPositionModelArrayItem
+                {
+                    public TcpPositionModel TcpPositionModel { get; set; }
+                }
+                public class TcpPositionModel
+                {
+                    public double X { get; set; }
+                    public double Y { get; set; }
+                    public double Z { get; set; }
+                    public double Rx { get; set; }
+                    public double Ry { get; set; }
+                    public double Rz { get; set; }
+                }
             }
         }
         public class CommandResponseModel
-
-
         {
             public double Result { get; set; }
             public PayloadModel Payload { get; set; }

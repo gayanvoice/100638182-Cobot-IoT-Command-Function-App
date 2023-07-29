@@ -30,6 +30,9 @@ namespace CobotIoTCommandFunctionApp
         private const string UNLOCK_PROTECTIVE_STOP_CONTROL_COMMAND_VARIABLE = "UnlockProtectiveStopControlCommand";
         private const string OPEN_POPUP_CONTROL_COMMAND_VARIABLE = "OpenPopupControlCommand";
         private const string CLOSE_POPUP_CONTROL_COMMAND_VARIABLE = "ClosePopupControlCommand";
+        private const string MOVE_J_CONTROL_COMMAND_VARIABLE = "MoveJControlCommand";
+        private const string MOVE_L_CONTROL_COMMAND_VARIABLE = "MoveLControlCommand";
+        private const string MOVE_P_CONTROL_COMMAND_VARIABLE = "MovePControlCommand";
 
         private const string COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE = "COMMAND_EXECUTION_SEQUENCE_ERROR";
         private const string COBOT_CLIENT_EXECUTED_VARIABLE = "COBOT_CLIENT_EXECUTED";
@@ -683,6 +686,165 @@ namespace CobotIoTCommandFunctionApp
                 return new BadRequestObjectResult(closePopupControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
             return new BadRequestObjectResult(closePopupControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+        }
+        [FunctionName("MoveJControlCommandFunction")]
+        public static async Task<IActionResult> MoveJControlCommandFunction(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest httpRequest, ILogger log)
+        {
+            MoveJControlCommandResponseModel moveJControlCommandResponseModel =
+                new MoveJControlCommandResponseModel();
+
+            string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
+            if (IOT_HUB_SERVICE_URL is null)
+            {
+                return new BadRequestObjectResult(moveJControlCommandResponseModel
+                    .GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+            }
+            try
+            {
+                string requestBody = await new StreamReader(httpRequest.Body).ReadToEndAsync();
+                MoveJControlCommandResponseModel.CommandRequestModel  moveJControlCommandRequestModel = JsonConvert
+                    .DeserializeObject<MoveJControlCommandResponseModel.CommandRequestModel>(requestBody);
+
+                if (moveJControlCommandRequestModel.DeviceId is null)
+                {
+                    return new BadRequestObjectResult(moveJControlCommandResponseModel
+                        .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
+                }
+
+                ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
+                CloudToDeviceMethod cloudToDeviceMethod = new CloudToDeviceMethod(MOVE_J_CONTROL_COMMAND_VARIABLE);
+                cloudToDeviceMethod.SetPayloadJson(JsonConvert.SerializeObject(moveJControlCommandRequestModel.Payload));
+                cloudToDeviceMethod.ResponseTimeout = TimeSpan.FromSeconds(moveJControlCommandRequestModel.ResponseTimeout);
+                CloudToDeviceMethodResult cloudToDeviceMethodResult = await serviceClient
+                    .InvokeDeviceMethodAsync(moveJControlCommandRequestModel.DeviceId, cloudToDeviceMethod);
+
+                moveJControlCommandResponseModel.CommandRequest = moveJControlCommandRequestModel;
+                moveJControlCommandResponseModel.CommandResponse = MoveJControlCommandResponseModel
+                    .CommandResponseModel.GetCommandResponseModel(cloudToDeviceMethodResult);
+
+                if (moveJControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
+                {
+                    return new BadRequestObjectResult(moveJControlCommandResponseModel
+                        .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
+                }
+                if (moveJControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
+                {
+                    return new OkObjectResult(moveJControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+            }
+            catch (Exception exception)
+            {
+                ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
+                return new BadRequestObjectResult(moveJControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+            }
+            return new BadRequestObjectResult(moveJControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+        }
+        [FunctionName("MovePControlCommandFunction")]
+        public static async Task<IActionResult> MovePControlCommandFunction(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest httpRequest, ILogger log)
+        {
+            MovePControlCommandResponseModel movePControlCommandResponseModel =
+                new MovePControlCommandResponseModel();
+
+            string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
+            if (IOT_HUB_SERVICE_URL is null)
+            {
+                return new BadRequestObjectResult(movePControlCommandResponseModel
+                    .GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+            }
+            try
+            {
+                string requestBody = await new StreamReader(httpRequest.Body).ReadToEndAsync();
+                MovePControlCommandResponseModel.CommandRequestModel moveJControlCommandRequestModel = JsonConvert
+                    .DeserializeObject<MovePControlCommandResponseModel.CommandRequestModel>(requestBody);
+
+                if (moveJControlCommandRequestModel.DeviceId is null)
+                {
+                    return new BadRequestObjectResult(movePControlCommandResponseModel
+                        .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
+                }
+
+                ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
+                CloudToDeviceMethod cloudToDeviceMethod = new CloudToDeviceMethod(MOVE_P_CONTROL_COMMAND_VARIABLE);
+                cloudToDeviceMethod.SetPayloadJson(JsonConvert.SerializeObject(moveJControlCommandRequestModel.Payload));
+                cloudToDeviceMethod.ResponseTimeout = TimeSpan.FromSeconds(moveJControlCommandRequestModel.ResponseTimeout);
+                CloudToDeviceMethodResult cloudToDeviceMethodResult = await serviceClient
+                    .InvokeDeviceMethodAsync(moveJControlCommandRequestModel.DeviceId, cloudToDeviceMethod);
+
+                movePControlCommandResponseModel.CommandRequest = moveJControlCommandRequestModel;
+                movePControlCommandResponseModel.CommandResponse = MovePControlCommandResponseModel
+                    .CommandResponseModel.GetCommandResponseModel(cloudToDeviceMethodResult);
+
+                if (movePControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
+                {
+                    return new BadRequestObjectResult(movePControlCommandResponseModel
+                        .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
+                }
+                if (movePControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
+                {
+                    return new OkObjectResult(movePControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+            }
+            catch (Exception exception)
+            {
+                ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
+                return new BadRequestObjectResult(movePControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+            }
+            return new BadRequestObjectResult(movePControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+        }
+        [FunctionName("MoveLControlCommandFunction")]
+        public static async Task<IActionResult> MoveLControlCommandFunction(
+           [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest httpRequest, ILogger log)
+        {
+            MoveLControlCommandResponseModel moveLControlCommandResponseModel =
+                new MoveLControlCommandResponseModel();
+
+            string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
+            if (IOT_HUB_SERVICE_URL is null)
+            {
+                return new BadRequestObjectResult(moveLControlCommandResponseModel
+                    .GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+            }
+            try
+            {
+                string requestBody = await new StreamReader(httpRequest.Body).ReadToEndAsync();
+                MoveLControlCommandResponseModel.CommandRequestModel moveLControlCommandRequestModel = JsonConvert
+                    .DeserializeObject<MoveLControlCommandResponseModel.CommandRequestModel>(requestBody);
+
+                if (moveLControlCommandRequestModel.DeviceId is null)
+                {
+                    return new BadRequestObjectResult(moveLControlCommandResponseModel
+                        .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
+                }
+
+                ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
+                CloudToDeviceMethod cloudToDeviceMethod = new CloudToDeviceMethod(MOVE_L_CONTROL_COMMAND_VARIABLE);
+                cloudToDeviceMethod.SetPayloadJson(JsonConvert.SerializeObject(moveLControlCommandRequestModel.Payload));
+                cloudToDeviceMethod.ResponseTimeout = TimeSpan.FromSeconds(moveLControlCommandRequestModel.ResponseTimeout);
+                CloudToDeviceMethodResult cloudToDeviceMethodResult = await serviceClient
+                    .InvokeDeviceMethodAsync(moveLControlCommandRequestModel.DeviceId, cloudToDeviceMethod);
+
+                moveLControlCommandResponseModel.CommandRequest = moveLControlCommandRequestModel;
+                moveLControlCommandResponseModel.CommandResponse = MoveLControlCommandResponseModel
+                    .CommandResponseModel.GetCommandResponseModel(cloudToDeviceMethodResult);
+
+                if (moveLControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
+                {
+                    return new BadRequestObjectResult(moveLControlCommandResponseModel
+                        .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
+                }
+                if (moveLControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
+                {
+                    return new OkObjectResult(moveLControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+            }
+            catch (Exception exception)
+            {
+                ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
+                return new BadRequestObjectResult(moveLControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+            }
+            return new BadRequestObjectResult(moveLControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
     }
 }
