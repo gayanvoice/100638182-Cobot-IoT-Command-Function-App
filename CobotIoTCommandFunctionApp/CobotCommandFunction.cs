@@ -52,7 +52,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(startIotCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+                return new OkObjectResult(startIotCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
             {
@@ -60,7 +60,7 @@ namespace CobotIoTCommandFunctionApp
                 StartIotCommandResponseModel.CommandRequestModel startIotCommandRequestModel = JsonConvert.DeserializeObject<StartIotCommandResponseModel.CommandRequestModel>(requestBody);
                 if (startIotCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(startIotCommandResponseModel.GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
+                    return new OkObjectResult(startIotCommandResponseModel.GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
                 CloudToDeviceMethod cloudToDeviceMethod = new CloudToDeviceMethod(START_IOT_COMMAND_VARIABLE);
@@ -71,7 +71,7 @@ namespace CobotIoTCommandFunctionApp
                 startIotCommandResponseModel.CommandResponse = StartIotCommandResponseModel.CommandResponseModel.GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (startIotCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(startIotCommandResponseModel.GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
+                    return new OkObjectResult(startIotCommandResponseModel.GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (startIotCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
@@ -81,9 +81,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(startIotCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(startIotCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(startIotCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(startIotCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("StopIotCommandFunction")]
         public static async Task<IActionResult> StopIotCommandFunction(
@@ -94,7 +94,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(stopIotCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+                return new OkObjectResult(stopIotCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
             {
@@ -102,7 +102,7 @@ namespace CobotIoTCommandFunctionApp
                 StopIotCommandResponseModel.CommandRequestModel stopIotCommandRequestModel = JsonConvert.DeserializeObject<StopIotCommandResponseModel.CommandRequestModel>(requestBody);
                 if (stopIotCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(stopIotCommandResponseModel.GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
+                    return new OkObjectResult(stopIotCommandResponseModel.GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
                 CloudToDeviceMethod cloudToDeviceMethod = new CloudToDeviceMethod(STOP_IOT_COMMAND_VARIABLE);
@@ -112,7 +112,7 @@ namespace CobotIoTCommandFunctionApp
                 stopIotCommandResponseModel.CommandResponse = StopIotCommandResponseModel.CommandResponseModel.GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (stopIotCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(stopIotCommandResponseModel.GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
+                    return new OkObjectResult(stopIotCommandResponseModel.GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (stopIotCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
@@ -122,9 +122,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(stopIotCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(stopIotCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(stopIotCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(stopIotCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("EnableControlCommandFunction")]
         public static async Task<IActionResult> EnableControlCommandFunction(
@@ -135,7 +135,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(enableControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+                return new OkObjectResult(enableControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
             {
@@ -144,7 +144,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<EnableControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (enableControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(enableControlCommandResponseModel
+                    return new OkObjectResult(enableControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -157,7 +157,7 @@ namespace CobotIoTCommandFunctionApp
                     .GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (enableControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(enableControlCommandResponseModel
+                    return new OkObjectResult(enableControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (enableControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -168,9 +168,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(enableControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(enableControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(enableControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(enableControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("DisableControlCommandFunction")]
         public static async Task<IActionResult> DisableControlCommandFunction(
@@ -181,7 +181,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(disableControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+                return new OkObjectResult(disableControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
             {
@@ -190,7 +190,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<DisableControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (disableControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(disableControlCommandResponseModel
+                    return new OkObjectResult(disableControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -203,7 +203,7 @@ namespace CobotIoTCommandFunctionApp
                     .GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (disableControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(disableControlCommandResponseModel
+                    return new OkObjectResult(disableControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (disableControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -214,9 +214,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(disableControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(disableControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(disableControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(disableControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("StartFreeDriveControlCommandFunction")]
         public static async Task<IActionResult> StartFreeDriveControlCommandFunction(
@@ -227,7 +227,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(startFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+                return new OkObjectResult(startFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
             {
@@ -236,7 +236,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<StartFreeDriveControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (startFreeDriveControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(startFreeDriveControlCommandResponseModel
+                    return new OkObjectResult(startFreeDriveControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -249,7 +249,7 @@ namespace CobotIoTCommandFunctionApp
                     .GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (startFreeDriveControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(startFreeDriveControlCommandResponseModel
+                    return new OkObjectResult(startFreeDriveControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (startFreeDriveControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -260,9 +260,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(startFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(startFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(startFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(startFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("StopFreeDriveControlCommandFunction")]
         public static async Task<IActionResult> StopFreeDriveControlCommandFunction(
@@ -273,7 +273,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(stopFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+                return new OkObjectResult(stopFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
             {
@@ -282,7 +282,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<StopFreeDriveControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (stopFreeDriveControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(stopFreeDriveControlCommandResponseModel
+                    return new OkObjectResult(stopFreeDriveControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -295,7 +295,7 @@ namespace CobotIoTCommandFunctionApp
                     .GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (stopFreeDriveControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(stopFreeDriveControlCommandResponseModel
+                    return new OkObjectResult(stopFreeDriveControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (stopFreeDriveControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -306,9 +306,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(stopFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(stopFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(stopFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(stopFreeDriveControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("PowerOnControlCommandFunction")]
         public static async Task<IActionResult> PowerOnControlCommandFunction(
@@ -319,7 +319,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(powerOnControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+                return new OkObjectResult(powerOnControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
             {
@@ -328,7 +328,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<PowerOnControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (powerOnControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(powerOnControlCommandResponseModel
+                    return new OkObjectResult(powerOnControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -341,7 +341,7 @@ namespace CobotIoTCommandFunctionApp
                     .GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (powerOnControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(powerOnControlCommandResponseModel
+                    return new OkObjectResult(powerOnControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (powerOnControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -352,9 +352,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(powerOnControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(powerOnControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(powerOnControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(powerOnControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("PowerOffControlCommandFunction")]
         public static async Task<IActionResult> PowerOffControlCommandFunction(
@@ -365,7 +365,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(powerOffControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+                return new OkObjectResult(powerOffControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
             {
@@ -374,7 +374,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<PowerOffControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (powerOffControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(powerOffControlCommandResponseModel
+                    return new OkObjectResult(powerOffControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -387,7 +387,7 @@ namespace CobotIoTCommandFunctionApp
                     .GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (powerOffControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(powerOffControlCommandResponseModel
+                    return new OkObjectResult(powerOffControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (powerOffControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -398,9 +398,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(powerOffControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(powerOffControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(powerOffControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(powerOffControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("PlayControlCommandFunction")]
         public static async Task<IActionResult> PlayControlCommandFunction(
@@ -411,7 +411,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(playControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+                return new OkObjectResult(playControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
             {
@@ -420,7 +420,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<PlayControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (playControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(playControlCommandResponseModel
+                    return new OkObjectResult(playControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -433,7 +433,7 @@ namespace CobotIoTCommandFunctionApp
                     .GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (playControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(playControlCommandResponseModel
+                    return new OkObjectResult(playControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (playControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -444,9 +444,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(playControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(playControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(playControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(playControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("PauseControlCommandFunction")]
         public static async Task<IActionResult> PauseControlCommandFunction(
@@ -457,7 +457,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(pauseControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
+                return new OkObjectResult(pauseControlCommandResponseModel.GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
             {
@@ -466,7 +466,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<PauseControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (pauseControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(pauseControlCommandResponseModel
+                    return new OkObjectResult(pauseControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -479,7 +479,7 @@ namespace CobotIoTCommandFunctionApp
                     .GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (pauseControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(pauseControlCommandResponseModel
+                    return new OkObjectResult(pauseControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (pauseControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -490,9 +490,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(pauseControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(pauseControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(pauseControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(pauseControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("CloseSafetyPopupControlCommandFunction")]
         public static async Task<IActionResult> CloseSafetyPopupControlCommandFunction(
@@ -504,7 +504,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(closeSafetyPopupControlCommandResponseModel
+                return new OkObjectResult(closeSafetyPopupControlCommandResponseModel
                     .GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
@@ -514,7 +514,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<CloseSafetyPopupControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (closeSafetyPopupControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(closeSafetyPopupControlCommandResponseModel
+                    return new OkObjectResult(closeSafetyPopupControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -527,7 +527,7 @@ namespace CobotIoTCommandFunctionApp
                     .CommandResponseModel.GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (closeSafetyPopupControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(closeSafetyPopupControlCommandResponseModel
+                    return new OkObjectResult(closeSafetyPopupControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (closeSafetyPopupControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -538,9 +538,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(closeSafetyPopupControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(closeSafetyPopupControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(closeSafetyPopupControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(closeSafetyPopupControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("UnlockProtectiveStopControlCommandFunction")]
         public static async Task<IActionResult> UnlockProtectiveStopControlCommandFunction(
@@ -552,7 +552,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(unlockProtectiveStopControlCommandResponseModel
+                return new OkObjectResult(unlockProtectiveStopControlCommandResponseModel
                     .GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
@@ -562,7 +562,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<UnlockProtectiveStopControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (unlockProtectiveStopControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(unlockProtectiveStopControlCommandResponseModel
+                    return new OkObjectResult(unlockProtectiveStopControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -575,7 +575,7 @@ namespace CobotIoTCommandFunctionApp
                     .CommandResponseModel.GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (unlockProtectiveStopControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(unlockProtectiveStopControlCommandResponseModel
+                    return new OkObjectResult(unlockProtectiveStopControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (unlockProtectiveStopControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -586,9 +586,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(unlockProtectiveStopControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(unlockProtectiveStopControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(unlockProtectiveStopControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(unlockProtectiveStopControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("OpenPopupControlCommandFunction")]
         public static async Task<IActionResult> OpenPopupControlCommandFunction(
@@ -600,7 +600,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(openPopupControlCommandResponseModel
+                return new OkObjectResult(openPopupControlCommandResponseModel
                     .GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
@@ -610,7 +610,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<OpenPopupControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (openPopupControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(openPopupControlCommandResponseModel
+                    return new OkObjectResult(openPopupControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -624,7 +624,7 @@ namespace CobotIoTCommandFunctionApp
                     .CommandResponseModel.GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (openPopupControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(openPopupControlCommandResponseModel
+                    return new OkObjectResult(openPopupControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (openPopupControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -635,9 +635,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(openPopupControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(openPopupControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(openPopupControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(openPopupControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("ClosePopupControlCommandFunction")]
         public static async Task<IActionResult> ClosePopupControlCommandFunction(
@@ -649,7 +649,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(closePopupControlCommandResponseModel
+                return new OkObjectResult(closePopupControlCommandResponseModel
                     .GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
@@ -659,7 +659,7 @@ namespace CobotIoTCommandFunctionApp
                     .DeserializeObject<ClosePopupControlCommandResponseModel.CommandRequestModel>(requestBody);
                 if (closePopupControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(closePopupControlCommandResponseModel
+                    return new OkObjectResult(closePopupControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
                 ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IOT_HUB_SERVICE_URL);
@@ -672,7 +672,7 @@ namespace CobotIoTCommandFunctionApp
                     .CommandResponseModel.GetCommandResponseModel(cloudToDeviceMethodResult);
                 if (closePopupControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(closePopupControlCommandResponseModel
+                    return new OkObjectResult(closePopupControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (closePopupControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -683,9 +683,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(closePopupControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(closePopupControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(closePopupControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(closePopupControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("MoveJControlCommandFunction")]
         public static async Task<IActionResult> MoveJControlCommandFunction(
@@ -697,7 +697,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(moveJControlCommandResponseModel
+                return new OkObjectResult(moveJControlCommandResponseModel
                     .GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
@@ -708,7 +708,7 @@ namespace CobotIoTCommandFunctionApp
 
                 if (moveJControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(moveJControlCommandResponseModel
+                    return new OkObjectResult(moveJControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
 
@@ -725,7 +725,7 @@ namespace CobotIoTCommandFunctionApp
 
                 if (moveJControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(moveJControlCommandResponseModel
+                    return new OkObjectResult(moveJControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (moveJControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -736,9 +736,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(moveJControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(moveJControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(moveJControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(moveJControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("MovePControlCommandFunction")]
         public static async Task<IActionResult> MovePControlCommandFunction(
@@ -750,7 +750,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(movePControlCommandResponseModel
+                return new OkObjectResult(movePControlCommandResponseModel
                     .GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
@@ -761,7 +761,7 @@ namespace CobotIoTCommandFunctionApp
 
                 if (moveJControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(movePControlCommandResponseModel
+                    return new OkObjectResult(movePControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
 
@@ -778,7 +778,7 @@ namespace CobotIoTCommandFunctionApp
 
                 if (movePControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(movePControlCommandResponseModel
+                    return new OkObjectResult(movePControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (movePControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -789,9 +789,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(movePControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(movePControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(movePControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(movePControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
         [FunctionName("MoveLControlCommandFunction")]
         public static async Task<IActionResult> MoveLControlCommandFunction(
@@ -803,7 +803,7 @@ namespace CobotIoTCommandFunctionApp
             string IOT_HUB_SERVICE_URL = Environment.GetEnvironmentVariable(IOT_HUB_SERVICE_URL_ENVIRONMENT_VARIABLE);
             if (IOT_HUB_SERVICE_URL is null)
             {
-                return new BadRequestObjectResult(moveLControlCommandResponseModel
+                return new OkObjectResult(moveLControlCommandResponseModel
                     .GetBadRequestRespondModel(IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE));
             }
             try
@@ -814,7 +814,7 @@ namespace CobotIoTCommandFunctionApp
 
                 if (moveLControlCommandRequestModel.DeviceId is null)
                 {
-                    return new BadRequestObjectResult(moveLControlCommandResponseModel
+                    return new OkObjectResult(moveLControlCommandResponseModel
                         .GetBadRequestRespondModel(ERROR_NULL_VALUES_DETECTED_MESSAGE));
                 }
 
@@ -831,7 +831,7 @@ namespace CobotIoTCommandFunctionApp
 
                 if (moveLControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE))
                 {
-                    return new BadRequestObjectResult(moveLControlCommandResponseModel
+                    return new OkObjectResult(moveLControlCommandResponseModel
                         .GetBadRequestRespondModel(INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE));
                 }
                 if (moveLControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
@@ -842,9 +842,9 @@ namespace CobotIoTCommandFunctionApp
             catch (Exception exception)
             {
                 ExceptionModel exceptionModel = ExceptionModel.GetFromException(exception);
-                return new BadRequestObjectResult(moveLControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
+                return new OkObjectResult(moveLControlCommandResponseModel.GetBadRequestRespondModel(exceptionModel.Message));
             }
-            return new BadRequestObjectResult(moveLControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
+            return new OkObjectResult(moveLControlCommandResponseModel.GetBadRequestRespondModel(SOMETHING_HAPPENED_MESSAGE));
         }
     }
 }
