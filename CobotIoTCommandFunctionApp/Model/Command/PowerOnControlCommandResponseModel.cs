@@ -65,7 +65,7 @@ namespace CobotIotCommandFunctionApp.Model.Response
                 public string Status { get; set; }
                 public string LogText { get; set; }
                 public double Duration { get; set; }
-                public int RobotMode { get; set; }
+                public object RobotMode { get; set; }
                 public object RobotStatus { get; set; }
                 public static PayloadModel GetFromCloudToDeviceMethodResult(
                     CloudToDeviceMethodResult cloudToDeviceMethodResult)
@@ -76,7 +76,7 @@ namespace CobotIotCommandFunctionApp.Model.Response
                     payloadModel.Status = (string)jsonObject["status"];
                     payloadModel.LogText = (string)jsonObject["log_text"];
                     payloadModel.Duration = (double)jsonObject["duration"];
-                    payloadModel.RobotMode = (int) jsonObject["robot_mode"];
+                    payloadModel.RobotMode = jsonObject["robot_mode"];
                     payloadModel.RobotStatus = jsonObject["robot_status"];
                     return payloadModel;
                 }

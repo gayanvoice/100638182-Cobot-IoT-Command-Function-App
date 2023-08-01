@@ -36,10 +36,12 @@ namespace CobotIoTCommandFunctionApp
 
         private const string COMMAND_EXECUTION_SEQUENCE_ERROR_VARIABLE = "COMMAND_EXECUTION_SEQUENCE_ERROR";
         private const string COBOT_CLIENT_EXECUTED_VARIABLE = "COBOT_CLIENT_EXECUTED";
+        private const string COBOT_CLIENT_ERROR_VARIABLE = "COBOT_CLIENT_ERROR";
 
         private const string IOT_HUB_SERVICE_URL_IS_NULL_MESSAGE = "IOT_HUB_SERVICE_URL is NULL";
         private const string ERROR_NULL_VALUES_DETECTED_MESSAGE = "Error: Null value detected.";
         private const string INCORRECT_SEQUENCE_COMMAND_CANNOT_RUN_MESSAGE = "Command cannot run because the execution sequence is incorrect.";
+        private const string COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE = "Command cannot run because an error occured in the cobot client.";
         private const string COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE = "The command was executed successfully.";
         private const string SOMETHING_HAPPENED_MESSAGE = "Something happened.";
 
@@ -76,6 +78,10 @@ namespace CobotIoTCommandFunctionApp
                 if (startIotCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
                     return new OkObjectResult(startIotCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+                if (startIotCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(startIotCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
                 }
             }
             catch (Exception exception)
@@ -117,6 +123,10 @@ namespace CobotIoTCommandFunctionApp
                 if (stopIotCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
                     return new OkObjectResult(stopIotCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+                if (stopIotCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(stopIotCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
                 }
             }
             catch (Exception exception)
@@ -164,6 +174,10 @@ namespace CobotIoTCommandFunctionApp
                 {
                     return new OkObjectResult(enableControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
                 }
+                if (enableControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(enableControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
+                }
             }
             catch (Exception exception)
             {
@@ -209,6 +223,10 @@ namespace CobotIoTCommandFunctionApp
                 if (disableControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
                     return new OkObjectResult(disableControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+                if (disableControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(disableControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
                 }
             }
             catch (Exception exception)
@@ -256,6 +274,10 @@ namespace CobotIoTCommandFunctionApp
                 {
                     return new OkObjectResult(startFreeDriveControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
                 }
+                if (startFreeDriveControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(startFreeDriveControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
+                }
             }
             catch (Exception exception)
             {
@@ -301,6 +323,10 @@ namespace CobotIoTCommandFunctionApp
                 if (stopFreeDriveControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
                     return new OkObjectResult(stopFreeDriveControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+                if (stopFreeDriveControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(stopFreeDriveControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
                 }
             }
             catch (Exception exception)
@@ -348,6 +374,10 @@ namespace CobotIoTCommandFunctionApp
                 {
                     return new OkObjectResult(powerOnControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
                 }
+                if (powerOnControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(powerOnControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
+                }
             }
             catch (Exception exception)
             {
@@ -393,6 +423,10 @@ namespace CobotIoTCommandFunctionApp
                 if (powerOffControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
                     return new OkObjectResult(powerOffControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+                if (powerOffControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(powerOffControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
                 }
             }
             catch (Exception exception)
@@ -440,6 +474,10 @@ namespace CobotIoTCommandFunctionApp
                 {
                     return new OkObjectResult(playControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
                 }
+                if (playControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(playControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
+                }
             }
             catch (Exception exception)
             {
@@ -485,6 +523,10 @@ namespace CobotIoTCommandFunctionApp
                 if (pauseControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
                     return new OkObjectResult(pauseControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+                if (pauseControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(pauseControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
                 }
             }
             catch (Exception exception)
@@ -534,6 +576,10 @@ namespace CobotIoTCommandFunctionApp
                 {
                     return new OkObjectResult(closeSafetyPopupControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
                 }
+                if (closeSafetyPopupControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(closeSafetyPopupControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
+                }
             }
             catch (Exception exception)
             {
@@ -581,6 +627,10 @@ namespace CobotIoTCommandFunctionApp
                 if (unlockProtectiveStopControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
                     return new OkObjectResult(unlockProtectiveStopControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+                if (unlockProtectiveStopControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(unlockProtectiveStopControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
                 }
             }
             catch (Exception exception)
@@ -631,6 +681,10 @@ namespace CobotIoTCommandFunctionApp
                 {
                     return new OkObjectResult(openPopupControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
                 }
+                if (openPopupControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(openPopupControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
+                }
             }
             catch (Exception exception)
             {
@@ -678,6 +732,10 @@ namespace CobotIoTCommandFunctionApp
                 if (closePopupControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
                     return new OkObjectResult(closePopupControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+                if (closePopupControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(closePopupControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
                 }
             }
             catch (Exception exception)
@@ -732,6 +790,10 @@ namespace CobotIoTCommandFunctionApp
                 {
                     return new OkObjectResult(moveJControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
                 }
+                if (moveJControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(moveJControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
+                }
             }
             catch (Exception exception)
             {
@@ -785,6 +847,10 @@ namespace CobotIoTCommandFunctionApp
                 {
                     return new OkObjectResult(movePControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
                 }
+                if (movePControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(movePControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
+                }
             }
             catch (Exception exception)
             {
@@ -837,6 +903,10 @@ namespace CobotIoTCommandFunctionApp
                 if (moveLControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_EXECUTED_VARIABLE))
                 {
                     return new OkObjectResult(moveLControlCommandResponseModel.GetOkRequestRespondModel(COMMAND_EXECUTED_SUCCESSFULLY_MESSAGE));
+                }
+                if (moveLControlCommandResponseModel.CommandResponse.Payload.Status.Equals(COBOT_CLIENT_ERROR_VARIABLE))
+                {
+                    return new OkObjectResult(moveLControlCommandResponseModel.GetOkRequestRespondModel(COBOT_CLIENT_ERROR_CANNOT_RUN_MESSAGE));
                 }
             }
             catch (Exception exception)
