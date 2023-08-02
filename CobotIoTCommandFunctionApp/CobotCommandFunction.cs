@@ -47,7 +47,7 @@ namespace CobotIoTCommandFunctionApp
 
         [FunctionName("StartIotCommandFunction")]
         public static async Task<IActionResult> StartIotCommandFunction(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest httpRequest, ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest httpRequest, ILogger log)
         {
             StartIotCommandResponseModel startIotCommandResponseModel = new StartIotCommandResponseModel();
             
@@ -93,7 +93,7 @@ namespace CobotIoTCommandFunctionApp
         }
         [FunctionName("StopIotCommandFunction")]
         public static async Task<IActionResult> StopIotCommandFunction(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest httpRequest, ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest httpRequest, ILogger log)
         {
             StopIotCommandResponseModel stopIotCommandResponseModel = new StopIotCommandResponseModel();
 
